@@ -26,7 +26,30 @@ class ModelRendererWithAnim4 {
     private val assets: AssetManager
         get() = surfaceView.context.assets
 
-    private var isAnimating: Boolean = false // make it public to call this from activity
+    private var isAnimating: Boolean = false
+
+    private var exposure: Float = 1.0f
+    private var isExposed = true
+
+    fun toggleExposure() {
+        if (isExposed) {
+            exposure = 0.0f
+        } else {
+            exposure = 1.0f
+        }
+        isExposed = !isExposed
+        modelViewer.view.camera?.setExposure(exposure)
+    }
+    fun toggleExposureOnlyOnce() {
+        exposure = if (exposure == 1.0f) 0.0f else 1.0f
+        modelViewer.view.camera?.setExposure(exposure)
+//        modelViewer.view.exposure = exposure
+    }
+    fun toggleExposure(exposure: Float) {
+        modelViewer.view.camera?.setExposure(exposure)
+//        modelViewer.view.exposure = exposure
+    }
+
     private fun startAnimation(animationIndex: Int) {
         isAnimating = true
         choreographer.postFrameCallback(frameCallback)
@@ -39,6 +62,7 @@ class ModelRendererWithAnim4 {
     }
     private fun stopAnimation() {
         isAnimating = false
+//        modelViewer.animator?.apply { stopAnimation() } //? ng
         choreographer.removeFrameCallback(frameCallback)
     }
 
@@ -71,16 +95,22 @@ class ModelRendererWithAnim4 {
 
         modelViewer = ModelViewer(surfaceView = surfaceView, uiHelper = uiHelper)
 
-        surfaceView.setOnTouchListener { _, event ->
+        surfaceView.setOnTouchListener { v, event ->
             modelViewer.onTouchEvent(event) // to enable rotating model 360 degrees with touch
             if (event.action == MotionEvent.ACTION_DOWN) {
+                toggleExposure()
                 if (isAnimating) {
                     stopAnimation()
+//                    toggleExposure(0F)
                 } else {
                     startAnimation(2)
+//                    toggleExposure(1F)
                 }
+
+                v.performClick()
+                return@setOnTouchListener true
             }
-            true
+            return@setOnTouchListener false
         }
 
         modelViewer.scene.skybox = null
@@ -122,7 +152,11 @@ class ModelRendererWithAnim4 {
             val seconds = (currentTime - startTime).toDouble() / 1_000_000_000
             modelViewer.animator?.apply {
                 if (animationCount > 0) {
-                    applyAnimation(3, seconds.toFloat())
+                    if (isAnimating) {
+                        applyAnimation(3, seconds.toFloat())
+                    } else {
+                        stopAnimation()
+                    }
                 }
                 updateBoneMatrices()
             }

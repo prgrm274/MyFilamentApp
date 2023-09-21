@@ -26,5 +26,9 @@ class FragmentA : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val renderer1 = ModelRendererWithAnim4()
         renderer1.onSurfaceAvailable(b.surfaceView1, lifecycle)
+
+        b.btn.setOnClickListener {
+
+        }
     }
 }
