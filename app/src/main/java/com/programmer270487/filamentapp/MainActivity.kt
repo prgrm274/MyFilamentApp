@@ -1,13 +1,8 @@
 package com.programmer270487.filamentapp
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MotionEvent
-import android.widget.Toast
-import android.widget.Toast.LENGTH_LONG
-import android.widget.Toast.LENGTH_SHORT
-import com.google.android.filament.Engine
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.filament.utils.Utils
 import com.programmer270487.filamentapp.databinding.ActivityMainBinding
 

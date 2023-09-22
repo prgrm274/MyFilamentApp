@@ -19,9 +19,6 @@ import kotlinx.coroutines.withContext
 
 class FragmentB : Fragment() {
     private lateinit var userViewModel: UserViewModel
-//    private val userViewModel: UserViewModel by lazy {
-//        ViewModelProvider(this)[UserViewModel::class.java]
-//    }
     private lateinit var b: FragmentBBinding
 
     override fun onCreateView(
@@ -30,18 +27,11 @@ class FragmentB : Fragment() {
     ): View {
         b = FragmentBBinding.inflate(layoutInflater, container, false)
 
-        // Initialize ViewModel
         val userRepository = UserRepository(RetrofitClient.apiService)
         val viewModelFactory = UserViewModelFactory(userRepository)
         userViewModel = ViewModelProvider(this, viewModelFactory)[UserViewModel::class.java]
 
-
-
-        // Observe user data changes
         userViewModel.user.observe(viewLifecycleOwner) {
-            // Update UI with the data
-            // Display the users in a RecyclerView or other UI components
-
             viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                 withContext(Dispatchers.Main) {
                     Glide.with(this@FragmentB)
@@ -57,7 +47,7 @@ class FragmentB : Fragment() {
                     b.tvCity.text = it.address.city
                     b.tvStreetName.text = it.address.streetName
                     b.tvStreetAddress.text = it.address.streetAddress
-                    b.tvZipcode?.text = it.address.zipCode
+                    b.tvZipcode.text = it.address.zipCode
 
                     b.tvPlan.text = it.subscription.plan
                     b.tvStatus.text = it.subscription.status
@@ -65,20 +55,13 @@ class FragmentB : Fragment() {
                     b.tvTerm.text = it.subscription.term
                 }
             }
-//            Toast.makeText(activity, "${it.firstName} ${it.uid}", LENGTH_SHORT).show()
         }
 
         // Fetch users
         viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             userViewModel.fetchUser()
         }
-        // userViewModel.fetchUser() gini aja ga di dalam launch jg bisa
 
         return b.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
-        super.onViewCreated(view, savedInstanceState)
     }
 }
