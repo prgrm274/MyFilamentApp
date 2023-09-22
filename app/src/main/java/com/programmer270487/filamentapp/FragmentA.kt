@@ -27,8 +27,8 @@ class FragmentA : Fragment() {
         val renderer1 = ModelRendererWithAnim4()
         renderer1.onSurfaceAvailable(b.surfaceView1, lifecycle)
 
-        b.btn.setOnClickListener {
-
+        b.surfaceView1.setOnClickListener {
+            renderer1.startAnimation()
         }
     }
 }

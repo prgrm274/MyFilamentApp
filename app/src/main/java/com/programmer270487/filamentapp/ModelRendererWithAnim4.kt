@@ -29,13 +29,13 @@ class ModelRendererWithAnim4 {
     private var isAnimating: Boolean = false
 
     private var exposure: Float = 1.0f
-    private var isExposed = true
+    private var isExposed = false//true
 
     fun toggleExposure() {
         if (isExposed) {
-            exposure = 0.0f
+            exposure = 1.0f//0.0f
         } else {
-            exposure = 1.0f
+            exposure = 0.0f//1.0f
         }
         isExposed = !isExposed
         modelViewer.view.camera?.setExposure(exposure)
@@ -50,15 +50,15 @@ class ModelRendererWithAnim4 {
 //        modelViewer.view.exposure = exposure
     }
 
-    private fun startAnimation(animationIndex: Int) {
+    fun startAnimation(/*animationIndex: Int*/) {
         isAnimating = true
         choreographer.postFrameCallback(frameCallback)
-        modelViewer.animator?.apply {
-            if (animationCount > 0) {
-                applyAnimation(animationIndex, 4f)
-            }
-            updateBoneMatrices()
-        }
+//        modelViewer.animator?.apply {
+//            if (animationCount > 0) {
+//                applyAnimation(animationIndex, 4f)
+//            }
+//            updateBoneMatrices()
+//        }
     }
     private fun stopAnimation() {
         isAnimating = false
@@ -98,19 +98,22 @@ class ModelRendererWithAnim4 {
         surfaceView.setOnTouchListener { v, event ->
             modelViewer.onTouchEvent(event) // to enable rotating model 360 degrees with touch
             if (event.action == MotionEvent.ACTION_DOWN) {
-                toggleExposure()
+//                toggleExposure()
                 if (isAnimating) {
                     stopAnimation()
+                    toggleExposure()
 //                    toggleExposure(0F)
+                    v.performClick()
                 } else {
-                    startAnimation(2)
+                    startAnimation()
+//                    toggleExposure()
 //                    toggleExposure(1F)
                 }
-
-                v.performClick()
-                return@setOnTouchListener true
+//                v.performLongClick()
+//                v.performClick()
+//                return@setOnTouchListener true
             }
-            return@setOnTouchListener false
+            return@setOnTouchListener true
         }
 
         modelViewer.scene.skybox = null
@@ -154,6 +157,7 @@ class ModelRendererWithAnim4 {
                 if (animationCount > 0) {
                     if (isAnimating) {
                         applyAnimation(3, seconds.toFloat())
+//                        startAnimation(2)
                     } else {
                         stopAnimation()
                     }
