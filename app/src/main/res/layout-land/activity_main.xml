@@ -14,24 +14,75 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <SurfaceView
-            android:id="@+id/surface_view1"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <SurfaceView
+                android:id="@+id/surface_view1"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="A"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-        <SurfaceView
-            android:id="@+id/surface_view2"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
 
-        <SurfaceView
-            android:id="@+id/surface_view3"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <SurfaceView
+                android:id="@+id/surface_view2"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="B"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
 
-        <SurfaceView
-            android:id="@+id/surface_view4"
-            android:layout_width="200dp"
-            android:layout_height="200dp" />
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <SurfaceView
+                android:id="@+id/surface_view3"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="C"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <SurfaceView
+                android:id="@+id/surface_view4"
+                android:layout_width="200dp"
+                android:layout_height="200dp" />
+            <TextView
+                android:layout_marginTop="20dp"
+                android:text="D"
+                android:textSize="18sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
