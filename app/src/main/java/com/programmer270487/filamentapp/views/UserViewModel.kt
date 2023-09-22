@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.programmer270487.filamentapp.data.User
 import com.programmer270487.filamentapp.data.UserRepository
 import kotlinx.coroutines.launch
+import java.io.IOException
 
 class UserViewModel(private val repository: UserRepository) : ViewModel() {
     private val _users = MutableLiveData<List<User>>()
@@ -26,11 +27,17 @@ class UserViewModel(private val repository: UserRepository) : ViewModel() {
     }
     fun fetchUser() {
         viewModelScope.launch {
-            val response = repository.getUser()
-            if (response.isSuccessful) {
-                _user.value = response.body()
-            } else {
-                // Handle error
+            try {
+                val response = repository.getUser()
+                if (response.isSuccessful) {
+                    _user.value = response.body()
+                } else {
+                    println("Error: ${response.code()} - ${response.message()}")
+                }
+            } catch (e: IOException) {
+                println("IO Exception: ${e.message}")
+            } catch (e: Exception) {
+                println("Exception: ${e.message}")
             }
         }
     }
