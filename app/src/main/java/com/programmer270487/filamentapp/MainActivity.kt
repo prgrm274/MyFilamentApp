@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
         }*/
 
         b.surfaceView1.setOnClickListener {
-            renderer1.toggleExposureOnlyOnce()
             startActivity(Intent(this, WithFragmentsActivity::class.java))
         }
         b.surfaceView2.setOnClickListener {
